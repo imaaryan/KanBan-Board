@@ -1,34 +1,75 @@
-let addNewTaskBtn = document.querySelectorAll('.add-item');
+// Initialize event listeners
+function initializeEventListeners() {
+    document.querySelectorAll('.add-item').forEach(btn => btn.addEventListener("click", showNewTaskPopup));
+    document.querySelectorAll('.close-button').forEach(btn => btn.addEventListener("click", hideNewTaskPopup));
+    document.getElementById('addNewBoard').addEventListener("click", showNewBoardPopup);
+    document.getElementById('boardCloseBtn').addEventListener("click", hideNewBoardPopup);
 
-addNewTaskBtn.forEach(btn => {
-    btn.addEventListener("click", showNewTaskPopup);
+// Prevent empty task submission
+    document.getElementById('form-addtask').addEventListener("submit", function(e) {
+        let taskInput = document.getElementById('new-task');
+        
+        if (taskInput.value.trim() === "") {
+            e.preventDefault(); // Prevent form submission
+            hideNewTaskPopup();
+        } else {
+            addNewTask(e);
+        }
+    });
+
+// Prevent Empty Board Submission
+    document.getElementById('newBoardForm').addEventListener("submit", (e) => {
+   
+     let newBoardName = document.getElementById('NewBoardName');
+    let newBoardDes = document.getElementById('NewBoardDes');
+
+if ( newBoardName.value.trim() === "" ){
+e.preventDefault();
+newBoardDes.value = "";
+hideNewBoardPopup()
+} else { addNewBoard(e) }
+
+
 });
 
-let closeBtn = document.querySelectorAll('.close-button');
 
-closeBtn.forEach(btn => {
-    btn.addEventListener("click", hideNewTaskPopup);
-});
+}
 
-//Show/Hide New Task Popup Function
-let addNewTaskPopup = document.getElementById('add-task-popup');
+// Show/Hide Popups
+function showPopup(element) {
+    element.classList.remove("hidden");
+}
 
-function showNewTaskPopup(){ 
-addNewTaskPopup.classList.remove("hidden");
-};
+function hidePopup(element) {
+    element.classList.add("hidden");
+}
 
-function hideNewTaskPopup(){ 
-addNewTaskPopup.classList.add("hidden");
-};
+function showNewTaskPopup() {
+    showPopup(document.getElementById('add-task-popup'));
+}
 
+function hideNewTaskPopup() {
+    hidePopup(document.getElementById('add-task-popup'));
+}
 
-// Add Task form Popup Form
-let newTask = document.getElementById('new-task');
-let newTaskForm = document.getElementById('form-addtask');
-let cardsContainer = document.getElementById('cards-container');
+function showNewBoardPopup() {
+    showPopup(document.getElementById('add-new-board-popup'));
+}
 
-newTaskForm.addEventListener("submit", (e) => {
-let code = ` <div draggable="true" class="card">
+function hideNewBoardPopup() {
+    hidePopup(document.getElementById('add-new-board-popup'));
+}
+
+// Add New Task
+function addNewTask(event) {
+    event.preventDefault();
+    
+    let newTask = document.getElementById('new-task');
+    let cardsContainer = document.getElementById('cards-container');
+    
+    let taskElement = document.createElement('div');
+    taskElement.innerHTML = `
+        <div draggable="true" class="card">
             <div class="card-header">
               <div class="card-icon"></div>
               <div class="card-label">Draft</div>
@@ -36,105 +77,63 @@ let code = ` <div draggable="true" class="card">
             <div class="card-title">
               ${newTask.value}
             </div>
-          </div> `
+          </div> 
+    `;
+    
+    cardsContainer.appendChild(taskElement);
+    
+    addDragEvents(taskElement);
+    hideNewTaskPopup();
+    newTask.value = "";
+}
 
-cardsContainer.innerHTML += code;
+// Add Drag & Drop Functionality
+function addDragEvents(task) {
+    task.addEventListener("dragstart", () => task.classList.add("flying"));
+    task.addEventListener("dragend", () => task.classList.remove("flying"));
+}
 
-addingFlyingClass();
-hideNewTaskPopup();
-newTask.value = null;
-e.preventDefault();
-})
+// Initialize Drag & Drop for existing cards
+function initializeDragAndDrop() {
+    document.querySelectorAll('.card').forEach(addDragEvents);
+    document.querySelectorAll('.cards-container').forEach(board => {
+        board.addEventListener("dragover", event => {
+            event.preventDefault();
+            let movingTask = document.querySelector('.flying');
+            if (movingTask) board.appendChild(movingTask);
+        });
+    });
+}
 
-// Function of Adding Flying Class on DragStart/End Events
-function addingFlyingClass(){
-let tasks = document.querySelectorAll('.card')
-
-tasks.forEach((e) => {
-e.addEventListener("dragstart", () => {
-e.classList.add("flying")
-})
-
-e.addEventListener("dragend", () => {
-e.classList.remove("flying")
-})
-})
-};
-
-
-// Change Tasks status around the Board
-addingFlyingClass();
-
-let boards = document.querySelectorAll('.cards-container');
-
-boards.forEach((e) => {
-
-e.addEventListener("dragover", () => {
-let addTask = document.querySelector('.flying')
-e.appendChild(addTask);
-})
-
-})
-
-
-//Add New Board
-
-//Show/Hide New Board Popup Function
-let addNewBoardPopup = document.getElementById('add-new-board-popup');
-
-function showNewBoardPopup(){ 
-addNewBoardPopup.classList.remove("hidden");
-};
-
-function hideNewBoardPopup(){ 
-addNewBoardPopup.classList.add("hidden");
-};
-
-let addNewBoardBtn = document.getElementById('addNewBoard');
-addNewBoardBtn.addEventListener("click", showNewBoardPopup);
-
-let boardCloseBtn = document.getElementById('boardCloseBtn');
-boardCloseBtn.addEventListener("click", hideNewBoardPopup);
-
-
-// Add New Board form Popup Form
-let newBoardName = document.getElementById('NewBoardName');
-let newBoardDes = document.getElementById('NewBoardDes');
-let newBoardForm = document.getElementById('newBoardForm');
-let boardContainer = document.getElementById('board-container');
-
-newBoardForm.addEventListener("submit", (e) => {
-let code = ` <div class="column">
+// Add New Board
+function addNewBoard(event) {
+    event.preventDefault();
+    
+    let newBoardName = document.getElementById('NewBoardName');
+    let newBoardDes = document.getElementById('NewBoardDes');
+    let boardContainer = document.getElementById('board-container');
+    
+    let boardElement = document.createElement('div');
+    boardElement.classList.add("column");
+    boardElement.innerHTML = `
         <div class="column-header">
-          <div class="status-indicator status-test"></div>
-          <div>${newBoardName.value}</div>
-          <div class="column-count"></div>
+            <div class="status-indicator status-test"></div>
+            <div>${newBoardName.value}</div>
+            <div class="column-count"></div>
         </div>
         <div class="column-subtitle">${newBoardDes.value}</div>
-        <div id="cards-container" class="cards-container">
-        
-        </div>
+        <div class="cards-container"></div>
+        <div class="add-item"><span class="add-icon">+</span> <span>Add item</span></div>
+    `;
+    
+    boardContainer.appendChild(boardElement);
+    initializeDragAndDrop();
+    initializeEventListeners();
+    hideNewBoardPopup();
+    newBoardName.value = "";
+    newBoardDes.value = "";
+}
 
-        <!-- Add New Task Button -->
-        <div class="add-item">
-          <span class="add-icon">+</span>
-          <span>Add item</span>
-        </div>
-      </div>`
-
-boardContainer.innerHTML += code;
-
-boards.forEach((e) => {
-
-e.addEventListener("dragover", () => {
-let addTask = document.querySelector('.flying')
-e.appendChild(addTask);
-})
-
-})
-
-hideNewBoardPopup();
-newBoardName.value = null;
-newBoardDes.value = null;
-e.preventDefault();
-})
+// Initialize All Functions
+initializeEventListeners();
+initializeDragAndDrop();

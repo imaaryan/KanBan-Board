@@ -42,7 +42,7 @@ function initializeEventListeners() {
   });
 }
 
-// //hide/show edit or delete icons on hover
+// //hide/show edit or delete icons on card hover
 function showOnHover() {
   let icons = document.querySelectorAll(".icons");
 
@@ -60,14 +60,15 @@ function showOnHover() {
   });
 }
 
-//Remove Task
+//Remove Task Function
 function removeTask() {
+  showOnHover();
   let removeIcon = document.querySelectorAll(".remove");
 
   removeIcon.forEach((e) => {
     let card = e.closest(".card");
 
-    card.addEventListener("click", () => {
+    e.addEventListener("click", () => {
       card.remove();
     });
   });
@@ -163,11 +164,15 @@ function addNewBoard(event) {
   let boardElement = document.createElement("div");
   boardElement.classList.add("column");
   boardElement.innerHTML = `
-        <div class="column-header">
-            <div class="status-indicator status-test"></div>
-            <div>${newBoardName.value}</div>
-            <div class="column-count"></div>
+        <div class="column-header-parent">
+        <div class="column-header"><div class="status-indicator color-gray"></div>
+        <div>${newBoardName.value}</div>
+        <div class="column-count"></div></div>
+        <div class="column-header boardIcons">
+          <i class="ri-edit-line editBoard"></i>
+          <i class="ri-delete-bin-line removeBoard"></i>
         </div>
+      </div>
         <div class="column-subtitle">${newBoardDes.value}</div>
         <div class="cards-container"></div>
         <div class="add-item"><span class="add-icon">+</span> <span>Add item</span></div>

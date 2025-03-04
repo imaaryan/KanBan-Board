@@ -45,8 +45,9 @@ function initializeEventListeners() {
 // //hide/show edit or delete icons on card hover
 function showOnHover() {
   let icons = document.querySelectorAll(".icons");
+  let boardIcons = document.querySelectorAll(".boardIcons");
 
-  // Loop through each icons container and attach hover event listeners
+  // Loop through each icons card and attach hover event listeners
   icons.forEach((e) => {
     let card = e.closest(".card");
 
@@ -58,11 +59,26 @@ function showOnHover() {
       e.classList.add("hidden");
     });
   });
+
+  //hide/show edit or delete icons on Board hover
+  boardIcons.forEach((e) => {
+    let card = e.closest(".column");
+
+    card.addEventListener("mouseenter", () => {
+      e.classList.remove("hidden");
+    });
+
+    card.addEventListener("mouseleave", () => {
+      e.classList.add("hidden");
+    });
+  });
 }
 
-//Remove Task Function
-function removeTask() {
+//Remove Task/Board Function
+function removeTaskOrBoard() {
   showOnHover();
+
+  //Task
   let removeIcon = document.querySelectorAll(".remove");
 
   removeIcon.forEach((e) => {
@@ -70,6 +86,17 @@ function removeTask() {
 
     e.addEventListener("click", () => {
       card.remove();
+    });
+  });
+
+  //Board
+  let boardRemoveIcon = document.querySelectorAll(".removeBoard");
+
+  boardRemoveIcon.forEach((e) => {
+    let column = e.closest(".column");
+
+    e.addEventListener("click", () => {
+      column.remove();
     });
   });
 }
@@ -129,7 +156,7 @@ function addNewTask(event) {
   cardsContainer.appendChild(taskElement);
 
   addDragEvents(taskElement);
-  removeTask();
+  removeTaskOrBoard();
   showOnHover();
   hideNewTaskPopup();
   newTask.value = "";
@@ -168,7 +195,7 @@ function addNewBoard(event) {
         <div class="column-header"><div class="status-indicator color-gray"></div>
         <div>${newBoardName.value}</div>
         <div class="column-count"></div></div>
-        <div class="column-header boardIcons">
+        <div class="column-header boardIcons hidden">
           <i class="ri-edit-line editBoard"></i>
           <i class="ri-delete-bin-line removeBoard"></i>
         </div>
@@ -179,6 +206,8 @@ function addNewBoard(event) {
     `;
 
   boardContainer.appendChild(boardElement);
+  showOnHover();
+  removeTaskOrBoard();
   initializeDragAndDrop();
   initializeEventListeners();
   hideNewBoardPopup();
@@ -187,7 +216,7 @@ function addNewBoard(event) {
 }
 
 // Initialize All Functions
-removeTask();
+removeTaskOrBoard();
 showOnHover();
 initializeEventListeners();
 initializeDragAndDrop();

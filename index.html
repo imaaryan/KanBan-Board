@@ -1,149 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kanban Board</title>
-    <link rel="stylesheet" href="style.css" />
-    <style></style>
-  </head>
-  <body>
-    <div id="board-container" class="board-container">
-      <!-- To Do Column -->
-      <div class="column">
-        <div class="column-header">
-          <div class="status-indicator status-todo"></div>
-          <div>To Do</div>
-          <div class="column-count"></div>
-        </div>
-        <div class="column-subtitle">This is my first column</div>
-        <div id="cards-container" class="cards-container">
-          <div draggable="true" class="card">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="board-container" class="board-container">
+    <!-- To Do Column -->
+    <div class="column">
+      <div class="column-header">
+        <div class="status-indicator color-gray"></div>
+        <div>To Do</div>
+        <div class="column-count"></div>
+      </div>
+      <div class="column-subtitle">This is my first column</div>
+      <div id="cards-container" class="cards-container">
+        <div draggable="true" class="card">
+          <div class="card-header-parent">
             <div class="card-header">
-              <div class="card-icon"></div>
+              <div class="card-icon color-gray"></div>
               <div class="card-label">Draft</div>
             </div>
-            <div class="card-title">
-              <p>Task 1</p>
+            <div class="card-header icons hidden">
+              <i class="ri-edit-line edit"></i>
+              <i class="ri-delete-bin-line remove"></i>
             </div>
           </div>
-        </div>
-
-        <!-- Add New Task Button -->
-        <div class="add-item">
-          <span class="add-icon">+</span>
-          <span>Add item</span>
+          <div class="card-title">
+            <p>Task 1</p>
+          </div>
         </div>
       </div>
 
-      <!-- Doing Column -->
-      <div class="column">
-        <div class="column-header">
-          <div class="status-indicator status-doing"></div>
-          <div>Doing</div>
-          <div class="column-count"></div>
-        </div>
-        <div class="column-subtitle">This is my second column</div>
-        <div class="cards-container">
-          <div draggable="true" class="card">
-            <div class="card-header">
-              <div class="card-icon"></div>
-              <div class="card-label">Draft</div>
-            </div>
-            <div class="card-title">
-              <p>Task 1</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Add New Task Button -->
-        <div class="add-item">
-          <span class="add-icon">+</span>
-          <span>Add item</span>
-        </div>
+      <!-- Add New Task Button -->
+      <div class="add-item">
+        <span class="add-icon">+</span>
+        <span>Add item</span>
       </div>
-
-      <!-- Done Column -->
-      <div class="column">
-        <div class="column-header">
-          <div class="status-indicator status-done"></div>
-          <div>Done</div>
-          <div class="column-count"></div>
-        </div>
-        <div class="column-subtitle">This is my third column</div>
-        <div class="cards-container">
-          <div draggable="true" class="card">
-            <div class="card-header">
-              <div class="card-icon"></div>
-              <div class="card-label">Draft</div>
-            </div>
-            <div class="card-title">
-              <p>Task 1</p>
-            </div>
-          </div>
-        </div>
-        <!-- Add New Task Button -->
-        <div class="add-item">
-          <span class="add-icon">+</span>
-          <span>Add item</span>
-        </div>
-      </div>
-   
     </div>
 
- <div id="addNewBoard" class="addNewBoard">
-+
-   </div> 
-
-    <!-- New Board Popup -->
-    <div id="add-new-board-popup" class="modal-container hidden">
-      <div class="modal">
-        <div class="modal-header">
-          <div class="modal-title">Add New Board</div>
-          <div id="boardCloseBtn" class="close-button">×</div>
-        </div>
-        <form id="newBoardForm" class="modal-body">
-          <div class="form-group">
-            <label class="form-label">Name</label>
-            <input id="NewBoardName" type="text" class="form-input" />
+    <!-- Doing Column -->
+    <div class="column">
+      <div class="column-header">
+        <div class="status-indicator color-yellow"></div>
+        <div>Doing</div>
+        <div class="column-count"></div>
+      </div>
+      <div class="column-subtitle">This is my second column</div>
+      <div id="cards-container" class="cards-container">
+        <div draggable="true" class="card">
+          <div class="card-header-parent">
+            <div class="card-header">
+              <div class="card-icon color-yellow"></div>
+              <div class="card-label">Draft</div>
+            </div>
+            <div class="card-header icons hidden">
+              <i class="ri-edit-line edit"></i>
+              <i class="ri-delete-bin-line remove"></i>
+            </div>
           </div>
-          <div class="form-group">
-            <!-- <label class="form-label">Colors</label>
+          <div class="card-title">
+            <p>Task 1</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add New Task Button -->
+      <div class="add-item">
+        <span class="add-icon">+</span>
+        <span>Add item</span>
+      </div>
+    </div>
+
+    <!-- Done Column -->
+    <div class="column">
+      <div class="column-header">
+        <div class="status-indicator color-green"></div>
+        <div>Done</div>
+        <div class="column-count"></div>
+      </div>
+      <div class="column-subtitle">This is my third column</div>
+      <div id="cards-container" class="cards-container">
+        <div draggable="true" class="card">
+          <div class="card-header-parent">
+            <div class="card-header">
+              <div class="card-icon color-green"></div>
+              <div class="card-label">Draft</div>
+            </div>
+            <div class="card-header icons hidden">
+              <i class="ri-edit-line edit"></i>
+              <i class="ri-delete-bin-line remove"></i>
+            </div>
+          </div>
+          <div class="card-title">
+            <p>Task 1</p>
+          </div>
+        </div>
+      </div>
+      <!-- Add New Task Button -->
+      <div class="add-item">
+        <span class="add-icon">+</span>
+        <span>Add item</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="addNewBoard" class="addNewBoard">
+    +
+  </div>
+
+  <!-- New Board Popup -->
+  <div id="add-new-board-popup" class="modal-container hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Add New Board</div>
+        <div id="boardCloseBtn" class="close-button">×</div>
+      </div>
+      <form id="newBoardForm" class="modal-body">
+        <div class="form-board">
+          <label class="form-label">Name</label>
+          <input id="NewBoardName" type="text" class="form-input" />
+        </div>
+        <!-- <div class="form-board">
+            <label class="form-label">Colors</label>
             <div class="color-options">
+              <div class="color-option color-gray"></div>
               <div class="color-option color-green"></div>
-              <div class="color-option color-yellow selected"></div>
-              <div class="color-option color-orange"></div>
+              <div class="color-option color-yellow"></div>
+              <div class="color-option color-blue"></div>
+              <div class="color-option color-orange selected"></div>
               <div class="color-option color-pink"></div>
               <div class="color-option color-purple"></div>
-            </div> -->
-          </div>
-          <div class="form-group">
-            <label class="form-label">Description</label>
-            <input id="NewBoardDes" type="text" class="form-input" />
-          </div>
+            </div>
+          </div> -->
+        <div class="form-board">
+          <label class="form-label">Description</label>
+          <input id="NewBoardDes" type="text" class="form-input" />
+        </div>
         <div class="modal-footer">
           <button class="btn btn-cancel">Cancel</button>
           <button class="btn btn-submit">Submit</button>
         </div>
-        </form>
-        
-      </div>
-    </div>
+      </form>
 
-    <!-- New Task Popup -->
-    <div id="add-task-popup" class="modal-container hidden">
-      <div class="modal">
-        <div class="modal-header">
-          <div class="modal-title">Add New Task</div>
-          <div class="close-button">×</div>
-        </div>
-        <div class="modal-body">
-          <form id="form-addtask" class="form-addtask">
-            <label class="form-label">Task Name</label>
-            <input type="text" id="new-task" class="form-input" />
-            <button class="btn btn-submit btn-submit-only">Submit</button>
-          </form>
-        </div>
+    </div>
+  </div>
+
+  <!-- New Task Popup -->
+  <div id="add-task-popup" class="modal-container hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Add New Task</div>
+        <div class="close-button">×</div>
+      </div>
+      <div class="modal-body">
+        <form id="form-addtask" class="form-addtask">
+          <label class="form-label">Task Name</label>
+          <input type="text" id="new-task" class="form-input" />
+          <button class="btn btn-submit btn-submit-only">Submit</button>
+        </form>
+      </div>
     </div>
 
     <!-- Edit/Remove Task Popup -->
@@ -167,4 +189,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
